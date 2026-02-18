@@ -1,0 +1,22 @@
+# Python
+__pycache__/
+*.py[cod]
+*.class
+venv/
+.env
+
+# Audio Processing
+output/
+output_stems/
+*.wav
+*.mp3
+
+# Models & Weights
+models/
+.cache/
+
+# IDEs
+.vscode/
+.idea/
+.zencoder/
+.zenflow/

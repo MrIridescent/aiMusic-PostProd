@@ -1,0 +1,10 @@
+torch
+torchaudio
+librosa
+scipy
+numpy
+pedalboard
+demucs
+smolagents
+df-net
+ffmpeg-python

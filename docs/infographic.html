@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Music Post-Prod Pipeline Architecture</title>
+    <style>
+        body { font-family: 'Inter', sans-serif; background-color: #0f172a; color: #f8fafc; padding: 40px; }
+        .container { max-width: 1000px; margin: auto; }
+        .header { text-align: center; margin-bottom: 50px; }
+        .pipeline { display: flex; justify-content: space-between; align-items: flex-start; position: relative; }
+        .stage { background: #1e293b; border: 2px solid #3b82f6; border-radius: 12px; padding: 20px; width: 180px; text-align: center; z-index: 2; transition: transform 0.3s; }
+        .stage:hover { transform: scale(1.05); border-color: #60a5fa; }
+        .stage h3 { font-size: 1rem; color: #60a5fa; margin-bottom: 10px; }
+        .stage p { font-size: 0.8rem; color: #94a3b8; }
+        .arrow { position: absolute; top: 50px; height: 4px; background: #334155; z-index: 1; }
+        .stage-icon { font-size: 2rem; margin-bottom: 10px; }
+        .details { margin-top: 50px; background: #1e293b; padding: 30px; border-radius: 12px; }
+        .tech-tag { display: inline-block; background: #334155; color: #e2e8f0; padding: 4px 10px; border-radius: 4px; font-size: 0.75rem; margin: 2px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>AI Music Post-Production Pipeline</h1>
+            <p>From "Uncanny Valley" to Studio Fidelity</p>
+        </div>
+        
+        <div class="pipeline">
+            <div class="stage">
+                <div class="stage-icon">📥</div>
+                <h3>INGESTION</h3>
+                <p>Raw .mp3/ .wav from Generative AI</p>
+                <div class="tech-tag">FFmpeg</div>
+                <div class="tech-tag">librosa</div>
+            </div>
+            <div class="stage">
+                <div class="stage-icon">🔪</div>
+                <h3>DEMIXING</h3>
+                <p>Source separation into isolated stems</p>
+                <div class="tech-tag">htdemucs_ft</div>
+                <div class="tech-tag">PyTorch</div>
+            </div>
+            <div class="stage">
+                <div class="stage-icon">✨</div>
+                <h3>RESTORATION</h3>
+                <p>Denoising & High-Freq Inpainting</p>
+                <div class="tech-tag">DeepFilterNet</div>
+                <div class="tech-tag">AudioSR</div>
+            </div>
+            <div class="stage">
+                <div class="stage-icon">🎚️</div>
+                <h3>MIXING</h3>
+                <p>Programmatic EQ & Transient Shaping</p>
+                <div class="tech-tag">Pedalboard</div>
+                <div class="tech-tag">VST3</div>
+            </div>
+            <div class="stage">
+                <div class="stage-icon">💿</div>
+                <h3>MASTERING</h3>
+                <p>Final LUFS & Headroom Optimization</p>
+                <div class="tech-tag">Limiter</div>
+                <div class="tech-tag">Export</div>
+            </div>
+        </div>
+
+        <div class="details">
+            <h2>The "AI Conductor" Core</h2>
+            <p>The system is orchestrated by a <strong>smolagents ReAct loop</strong> that continuously analyzes the spectral centroid of the mix. If the mid-range is congested (200-500Hz), it triggers subtractive EQ dynamically until the target clarity is reached.</p>
+        </div>
+    </div>
+</body>
+</html>
