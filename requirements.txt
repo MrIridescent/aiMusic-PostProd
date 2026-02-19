@@ -6,7 +6,7 @@ numpy
 pedalboard
 demucs
 smolagents
-df-net
+deepfilternet
 ffmpeg-python
 gradio
 python-dotenv

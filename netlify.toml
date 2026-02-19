@@ -2,6 +2,9 @@
   publish = "web"
   command = "echo 'Building Web Hub...'"
 
+[build.environment]
+  PYTHON_VERSION = "3.11"
+
 [[redirects]]
   from = "/docs/*"
   to = "/docs/:splat"
