@@ -3,70 +3,125 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI Music Post-Prod Pipeline Architecture</title>
+    <title>AI Music Post-Prod Pipeline: Granular Architecture</title>
     <style>
-        body { font-family: 'Inter', sans-serif; background-color: #0f172a; color: #f8fafc; padding: 40px; }
-        .container { max-width: 1000px; margin: auto; }
-        .header { text-align: center; margin-bottom: 50px; }
-        .pipeline { display: flex; justify-content: space-between; align-items: flex-start; position: relative; }
-        .stage { background: #1e293b; border: 2px solid #3b82f6; border-radius: 12px; padding: 20px; width: 180px; text-align: center; z-index: 2; transition: transform 0.3s; }
-        .stage:hover { transform: scale(1.05); border-color: #60a5fa; }
-        .stage h3 { font-size: 1rem; color: #60a5fa; margin-bottom: 10px; }
-        .stage p { font-size: 0.8rem; color: #94a3b8; }
-        .arrow { position: absolute; top: 50px; height: 4px; background: #334155; z-index: 1; }
-        .stage-icon { font-size: 2rem; margin-bottom: 10px; }
-        .details { margin-top: 50px; background: #1e293b; padding: 30px; border-radius: 12px; }
-        .tech-tag { display: inline-block; background: #334155; color: #e2e8f0; padding: 4px 10px; border-radius: 4px; font-size: 0.75rem; margin: 2px; }
+        :root {
+            --bg: #020617;
+            --accent: #3b82f6;
+            --muted: #64748b;
+            --card-bg: #0f172a;
+            --card-border: #1e293b;
+        }
+        body { font-family: 'Inter', system-ui, sans-serif; background-color: var(--bg); color: #f1f5f9; line-height: 1.6; padding: 40px; }
+        .container { max-width: 1200px; margin: auto; }
+        .header { text-align: center; margin-bottom: 60px; }
+        .header h1 { font-size: 3rem; font-weight: 900; background: linear-gradient(to right, #60a5fa, #3b82f6); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        
+        /* Pipeline Visualization */
+        .pipeline-map { display: flex; flex-direction: column; gap: 40px; position: relative; }
+        .stage-row { display: flex; align-items: stretch; gap: 30px; position: relative; }
+        .stage-box { background: var(--card-bg); border: 2px solid var(--card-border); border-radius: 16px; padding: 25px; flex: 1; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); cursor: default; }
+        .stage-box:hover { border-color: var(--accent); transform: translateY(-5px); box-shadow: 0 10px 30px rgba(59, 130, 246, 0.1); }
+        
+        .stage-num { font-size: 0.75rem; font-weight: 800; color: var(--accent); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 10px; display: block; }
+        .stage-title { font-size: 1.25rem; font-weight: 700; margin-bottom: 12px; display: flex; align-items: center; gap: 10px; }
+        .stage-icon { font-size: 1.5rem; }
+        .stage-desc { font-size: 0.875rem; color: #94a3b8; margin-bottom: 15px; }
+        
+        .tech-stack { display: flex; flex-wrap: wrap; gap: 8px; }
+        .tech-pill { font-size: 0.7rem; font-weight: 600; background: #1e293b; color: #e2e8f0; padding: 4px 10px; border-radius: 6px; border: 1px solid #334155; }
+        
+        /* Signal Flow Connector */
+        .connector { width: 40px; display: flex; align-items: center; justify-content: center; position: relative; }
+        .connector svg { width: 100%; height: 24px; color: var(--accent); }
+        
+        .metadata-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; font-size: 0.75rem; border-top: 1px solid #1e293b; padding-top: 12px; margin-top: 12px; color: #cbd5e1; }
+        .meta-item { display: flex; flex-direction: column; }
+        .meta-label { color: var(--muted); font-size: 0.65rem; font-weight: 700; text-transform: uppercase; margin-bottom: 2px; }
+
+        /* Agentic Feedback Loop Overlay */
+        .agentic-conductor { border: 2px dashed #f59e0b; padding: 20px; border-radius: 16px; margin-top: 40px; background: rgba(245, 158, 11, 0.03); }
+        .agent-header { color: #f59e0b; font-weight: 800; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 15px; font-size: 0.875rem; display: flex; align-items: center; gap: 8px; }
     </style>
 </head>
 <body>
     <div class="container">
-        <div class="header">
-            <h1>AI Music Post-Production Pipeline</h1>
-            <p>From "Uncanny Valley" to Studio Fidelity</p>
-        </div>
-        
-        <div class="pipeline">
-            <div class="stage">
-                <div class="stage-icon">📥</div>
-                <h3>INGESTION</h3>
-                <p>Raw .mp3/ .wav from Generative AI</p>
-                <div class="tech-tag">FFmpeg</div>
-                <div class="tech-tag">librosa</div>
+        <header class="header">
+            <h1>AI AUDIO POST-PROD PIPELINE</h1>
+            <p style="color: var(--muted); font-weight: 500;">Autonomous "Uncanny Valley" Remediator & Dynamic Spectral Mixing Framework</p>
+        </header>
+
+        <div class="pipeline-map">
+            <!-- Stage 1 -->
+            <div class="stage-row">
+                <div class="stage-box">
+                    <span class="stage-num">Stage I: Source De-Aggregation</span>
+                    <div class="stage-title"><span class="stage-icon">🧬</span> High-Fidelity Source Separation</div>
+                    <p class="stage-desc">Dismantles flat generative audio into discrete instrumental/vocal stems using hybrid transformer architectures.</p>
+                    <div class="tech-stack">
+                        <span class="tech-pill">Demucs v4 (htdemucs_ft)</span>
+                        <span class="tech-pill">PyTorch CUDA</span>
+                        <span class="tech-pill">BiLSTM/Transformer</span>
+                    </div>
+                    <div class="metadata-grid">
+                        <div class="meta-item"><span class="meta-label">Metric (SDR)</span>8.4 dB (Vocals)</div>
+                        <div class="meta-item"><span class="meta-label">Domain</span>Time + Frequency Hybrid</div>
+                        <div class="meta-item"><span class="meta-label">Hardware</span>8GB+ VRAM Required</div>
+                        <div class="meta-item"><span class="meta-label">Strategy</span>2s Overlapping Chunking</div>
+                    </div>
+                </div>
             </div>
-            <div class="stage">
-                <div class="stage-icon">🔪</div>
-                <h3>DEMIXING</h3>
-                <p>Source separation into isolated stems</p>
-                <div class="tech-tag">htdemucs_ft</div>
-                <div class="tech-tag">PyTorch</div>
+
+            <!-- Stage 2 -->
+            <div class="stage-row">
+                <div class="stage-box">
+                    <span class="stage-num">Stage II: Neural Restoration</span>
+                    <div class="stage-title"><span class="stage-icon">⚡</span> Denoising & Bandwidth Extension</div>
+                    <p class="stage-desc">Remediates metallic artifacts (8-12kHz) and "spectral holes" via non-stationary neural filtering and latent diffusion.</p>
+                    <div class="tech-stack">
+                        <span class="tech-pill">DeepFilterNet3</span>
+                        <span class="tech-pill">AudioSR (LBM)</span>
+                        <span class="tech-pill">ERB-Domain Processing</span>
+                    </div>
+                    <div class="metadata-grid">
+                        <div class="meta-item"><span class="meta-label">Denoising Logic</span>Complex Multi-Frame Filtering</div>
+                        <div class="meta-item"><span class="meta-label">SR Target</span>48kHz Sample Rate</div>
+                        <div class="meta-item"><span class="meta-label">Latency Factor</span>0.19 CPU RTF</div>
+                        <div class="meta-item"><span class="meta-label">Algorithm</span>Latent Bridge Diffusion</div>
+                    </div>
+                </div>
             </div>
-            <div class="stage">
-                <div class="stage-icon">✨</div>
-                <h3>RESTORATION</h3>
-                <p>Denoising & High-Freq Inpainting</p>
-                <div class="tech-tag">DeepFilterNet</div>
-                <div class="tech-tag">AudioSR</div>
-            </div>
-            <div class="stage">
-                <div class="stage-icon">🎚️</div>
-                <h3>MIXING</h3>
-                <p>Programmatic EQ & Transient Shaping</p>
-                <div class="tech-tag">Pedalboard</div>
-                <div class="tech-tag">VST3</div>
-            </div>
-            <div class="stage">
-                <div class="stage-icon">💿</div>
-                <h3>MASTERING</h3>
-                <p>Final LUFS & Headroom Optimization</p>
-                <div class="tech-tag">Limiter</div>
-                <div class="tech-tag">Export</div>
+
+            <!-- Stage 3 -->
+            <div class="stage-row">
+                <div class="stage-box">
+                    <span class="stage-num">Stage III: Programmatic Signal Flow</span>
+                    <div class="stage-title"><span class="stage-icon">🎛️</span> Headless DSP & VST3 Orchestration</div>
+                    <p class="stage-desc">Bypasses GIL for multi-threaded, studio-grade processing. Analog-modeled EQ, compression, and reverb instantiation via code.</p>
+                    <div class="tech-stack">
+                        <span class="tech-pill">Spotify Pedalboard (JUCE)</span>
+                        <span class="tech-pill">VST3 Integration</span>
+                        <span class="tech-pill">RoughRider 3 DSP</span>
+                    </div>
+                    <div class="metadata-grid">
+                        <div class="meta-item"><span class="meta-label">Speed Factor</span>300x vs Native Python</div>
+                        <div class="meta-item"><span class="meta-label">Dynamics</span>1-3ms Lookahead Attack</div>
+                        <div class="meta-item"><span class="meta-label">Carving Range</span>200Hz - 500Hz Subtractive</div>
+                        <div class="meta-item"><span class="meta-label">Vocal Naturalizer</span>4.5Hz Humanized Vibrato</div>
+                    </div>
+                </div>
             </div>
         </div>
 
-        <div class="details">
-            <h2>The "AI Conductor" Core</h2>
-            <p>The system is orchestrated by a <strong>smolagents ReAct loop</strong> that continuously analyzes the spectral centroid of the mix. If the mid-range is congested (200-500Hz), it triggers subtractive EQ dynamically until the target clarity is reached.</p>
+        <!-- Stage 4 Overlay -->
+        <div class="agentic-conductor">
+            <div class="agent-header">🤖 Agentic feedback Loop: The AI Conductor</div>
+            <p style="font-size: 0.9rem; margin-bottom: 20px;">Utilizes <strong>smolagents</strong> and <strong>Hugging Face Llama-3</strong> to execute a continuous ReAct loop. The conductor "listens" to the final mix, analyzes spectral flatness and centroid metrics, and autonomously refines Pedalboard parameters until "Muddy" or "Harsh" pathologies are eliminated.</p>
+            <div class="tech-stack">
+                <span class="tech-pill" style="border-color: #f59e0b; color: #f59e0b;">ReAct Loop</span>
+                <span class="tech-pill" style="border-color: #f59e0b; color: #f59e0b;">Spectral Flatness Extraction</span>
+                <span class="tech-pill" style="border-color: #f59e0b; color: #f59e0b;">Dynamic Parameter Injection</span>
+            </div>
         </div>
     </div>
 </body>
