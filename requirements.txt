@@ -8,3 +8,5 @@ demucs
 smolagents
 df-net
 ffmpeg-python
+gradio
+python-dotenv
